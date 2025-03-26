@@ -1,1 +1,2 @@
 Write modular and reusable functions.
+Keep your functions short and focused.
