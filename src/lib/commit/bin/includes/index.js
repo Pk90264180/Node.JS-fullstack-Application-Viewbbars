@@ -241,7 +241,7 @@ require("dotenv").config();
 const REPO_PATH = ".";
 const git = simpleGit(REPO_PATH);
 
-const NOTES_FILE = path.join(__dirname, "../../../../notes.txt");
+const NOTES_FILE = path.join(__dirname, "notes.txt");
 
 const ABSOLUTE_NOTES_FILE = path.resolve(NOTES_FILE);
 
