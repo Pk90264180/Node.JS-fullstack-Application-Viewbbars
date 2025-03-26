@@ -123,13 +123,16 @@ async function makeCommit() {
     const currentLines = fs.readFileSync(ABSOLUTE_NOTES_FILE, "utf8").split("\n");
     const newLine = programmingTips[currentLines.length % programmingTips.length];
 
-    fs.appendFileSync(ABSOLUTE_NOTES_FILE, newLine + "\n");
+    const timestamp = new Date().toISOString();
+    const finalLine = `${newLine} - ${timestamp}`;
+
+    fs.appendFileSync(ABSOLUTE_NOTES_FILE, finalLine + "\n");
 
     await git.add(ABSOLUTE_NOTES_FILE);
-    await git.commit(newLine);
+    await git.commit(finalLine);
     await git.push(process.env.SECRET_GIT_REMOTE_URL, process.env.SECRET_BRANCH_NAME);
 
-    console.log("✅ Successfully committed and pushed!");
+    console.log("✅ Successfully committed and pushed:", finalLine);
   } catch (error) {
     console.error("❌ Error committing:", error);
   }
