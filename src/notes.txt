@@ -2,3 +2,4 @@ Programming Tips:
 Keep your functions short and focused.
 Avoid global variables whenever possible.
 Use comments to explain why, not what.
+Follow coding style guides for consistency.
