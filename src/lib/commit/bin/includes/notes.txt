@@ -3,3 +3,4 @@ Keep your functions short and focused.
 Avoid global variables whenever possible.
 Use comments to explain why, not what.
 Follow coding style guides for consistency. - 2025-03-26T08:38:29.761Z
+9 Refactor code regularly to improve readability. 2025-03-26T08:55:42.834Z
