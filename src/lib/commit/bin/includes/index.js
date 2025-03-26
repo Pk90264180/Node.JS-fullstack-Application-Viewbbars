@@ -1,11 +1,16 @@
 const simpleGit = require("simple-git");
 const fs = require("fs");
+const path = require("path");
 const schedule = require("node-schedule");
 require("dotenv").config();
 
 const REPO_PATH = ".";
 const BRANCH_NAME = process.env.SECRET_BRANCH_NAME;
 const git = simpleGit(REPO_PATH);
+
+const NOTES_FILE = path.join(__dirname, "../../../../notes.txt");
+
+const ABSOLUTE_NOTES_FILE = path.resolve(NOTES_FILE);
 
 const programmingTips = [
   "Always use meaningful variable names.",
@@ -109,13 +114,16 @@ const programmingTips = [
 
 async function makeCommit() {
   try {
-    const filePath = "../../../../../notes.txt";
-    const currentLines = fs.existsSync(filePath) ? fs.readFileSync(filePath, "utf8").split("\n") : [];
-    const newLine = programmingTips[currentLines.length % programmingTips.length];
-    
-    fs.appendFileSync(filePath, newLine + "\n");
+    if (!fs.existsSync(ABSOLUTE_NOTES_FILE)) {
+      fs.writeFileSync(ABSOLUTE_NOTES_FILE, "Programming Tips:\n");
+    }
 
-    await git.add(filePath);
+    const currentLines = fs.readFileSync(ABSOLUTE_NOTES_FILE, "utf8").split("\n");
+    const newLine = programmingTips[currentLines.length % programmingTips.length];
+
+    fs.appendFileSync(ABSOLUTE_NOTES_FILE, newLine + "\n");
+
+    await git.add(ABSOLUTE_NOTES_FILE);
     await git.commit(newLine);
     await git.push("origin", BRANCH_NAME);
     console.log("✅ Successfully committed and pushed!");
