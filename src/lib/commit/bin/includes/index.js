@@ -5,7 +5,6 @@ const schedule = require("node-schedule");
 require("dotenv").config();
 
 const REPO_PATH = ".";
-const BRANCH_NAME = process.env.SECRET_BRANCH_NAME;
 const git = simpleGit(REPO_PATH);
 
 const NOTES_FILE = path.join(__dirname, "../../../../notes.txt");
@@ -114,6 +113,9 @@ const programmingTips = [
 
 async function makeCommit() {
   try {
+    await git.addConfig("user.name", process.env.SECRET_GITHUB_USER_NAME);
+    await git.addConfig("user.email", process.env.SECRET_GITHUB_EMAIL);
+
     if (!fs.existsSync(ABSOLUTE_NOTES_FILE)) {
       fs.writeFileSync(ABSOLUTE_NOTES_FILE, "Programming Tips:\n");
     }
@@ -125,12 +127,14 @@ async function makeCommit() {
 
     await git.add(ABSOLUTE_NOTES_FILE);
     await git.commit(newLine);
-    await git.push("origin", BRANCH_NAME);
+    await git.push(process.env.SECRET_GIT_REMOTE_URL, process.env.SECRET_BRANCH_NAME);
+
     console.log("✅ Successfully committed and pushed!");
   } catch (error) {
     console.error("❌ Error committing:", error);
   }
 }
+
 
 async function makeMultipleCommits() {
   const commitCount = Math.floor(Math.random() * 4) + 5;
