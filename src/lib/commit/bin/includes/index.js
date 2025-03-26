@@ -109,7 +109,7 @@ const programmingTips = [
 
 async function makeCommit() {
   try {
-    const filePath = "../../../../notes.txt";
+    const filePath = "../../../../../notes.txt";
     const currentLines = fs.existsSync(filePath) ? fs.readFileSync(filePath, "utf8").split("\n") : [];
     const newLine = programmingTips[currentLines.length % programmingTips.length];
     
