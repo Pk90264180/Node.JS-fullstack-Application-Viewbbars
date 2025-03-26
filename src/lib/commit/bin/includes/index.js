@@ -381,7 +381,8 @@ async function makeCommit() {
     const newLine = programmingTips[currentLines.length % programmingTips.length];
 
     const timestamp = new Date().toISOString();
-    const finalLine = `${newLine} - ${timestamp}`;
+    const randomNumber = Math.floor(Math.random() * 10) + 1;
+    const finalLine = `${randomNumber} ${newLine} ${timestamp}`;
 
     fs.appendFileSync(NOTES_FILE, finalLine + "\n");
 
